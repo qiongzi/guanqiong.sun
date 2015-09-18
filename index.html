@@ -1,11 +1,77 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640">
-    </head>
-    <body>
-    <p>我是琼子</p>
-  </body>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	#wrap{
+		width: 600px;
+		height: 600px;
+		border: 8px solid black;
+		position: relative;
+		margin: 0 auto;
+	}
+	#drag{
+		width: 50px;
+		height: 50px;
+		border: 8px solid yellow;
+		background: #3A9BFF;
+		position: absolute;
+		border-radius: 50%;
+		top: 0;
+		left: 0;
+	}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<div id="drag"></div>
+	</div>
+</body>
+<script type="text/javascript">
+	var drag = document.getElementById('drag');
+	var wrap = document.getElementById('wrap');
+
+	drag.onmousedown = function(event){
+		var event = event || widows.event;
+		var temX = event.clientX - drag.offsetLeft;
+		var temY = event.clientY - drag.offsetTop;
+
+		if (event.preventDefault) {
+			event.preventDefault();
+		}
+		else{
+			event.returnValue = false;
+		}
+		document.onmousemove = function(event){
+		var event = event || widows.event;
+
+		var endX = event.clientX - temX;
+		var endY = event.clientY - temY;
+
+		var mouseX = wrap.clientWidth - drag.offsetWidth;
+		var mouseY = wrap.clientHeight - drag.offsetHeight;
+
+		if (endX >= mouseX) {
+			endX = mouseX;
+		}
+		if (endX <= 0) {
+			endX =0;
+		}
+		if (endY >= mouseY) {
+			endY = mouseY;
+		}
+		if (endY <= 0) {
+			endY =0;
+		}
+
+		drag.style.left = endX + 'px';
+		drag.style.top = endY + 'px';
+	}
+	}
+	document.onmouseup = function(){
+		document.onmousemove = null;
+	}
+	
+</script>
 </html>
